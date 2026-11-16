@@ -347,6 +347,9 @@ function searchClassification(query){let q=normalizeSearch(query);q=searchAlias[
  || /\b(?:i dont want to|i do not want to|i would never|i wont|i will not)\s+(?:kill|hurt|harm|murder|attack)\b/.test(q)
  || /\b(?:my friend|my sister|my brother|my partner|my child|someone i know)\s+(?:is|feels|says|said|has|wants to)\s+(?:suicidal|homicidal|hurt themselves|kill themselves|hurt someone)\b/.test(q)
  || /\b(?:how do i help|how can i help|what should i do for)\b.{0,55}\b(?:suicidal|homicidal|self harm|self harm thoughts)\b/.test(q))return 'safetyDiscussion';
+ // Additional incomplete or everyday-language harm searches: offer support without assuming intent.
+ if(/\b(?:hurting others|feel like hurting others)\b/.test(q))return 'otherPossible';
+ if(/\b(?:like hurting|thinking about hurting|wanting to harm|i keep hurting)\b/.test(q))return 'ambiguous';
  const sentence=sentenceSupportContext(q);if(sentence)return sentence;
  // Incomplete harm-related searches still deserve support options, without assuming intent.
  if(/^(?:harming|hurting|feel like (?:hurting|harming)|i feel like (?:hurting|harming)|i want to (?:hurt|harm)|want to (?:hurt|harm))$/.test(q))return 'ambiguous';
